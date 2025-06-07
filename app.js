@@ -86,19 +86,16 @@ document.addEventListener('DOMContentLoaded', function(){
         const progressBar = card.querySelector('.progress-bar');
         const progress = card.getAttribute('data-progress');
 
-        // 初期状態ではプログレスバーの幅を0に (CSSでも設定可能だが念のため)
         if(progressBar) progressBar.style.width = '0%';
 
-        card.addEventListener('mouseenter', () => {
+        card.addEventListener('click', () => {
+            card.classList.toggle('active');
             if(progressBar) {
-                progressBar.style.width = progress + '%';
-            }
-        });
-
-        card.addEventListener('mouseleave', () => {
-            if(progressBar) {
-                // ホバーが外れたら0に戻すか、そのままにするか選択
-                // progressBar.style.width = '0%';
+                if(card.classList.contains('active')) {
+                    progressBar.style.width = progress + '%';
+                } else {
+                    progressBar.style.width = '0%';
+                }
             }
         });
     });
@@ -111,4 +108,13 @@ document.addEventListener('DOMContentLoaded', function(){
         mirror: false, // 要素が画面外に出たときにアニメーションをリセットするか (once:true の場合は影響なし)
         anchorPlacement: 'top-bottom', // アニメーション開始のトリガー位置
     });
+
+    const contactForm = document.getElementById('contact-form');
+    if(contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('メッセージが送信されました。');
+            contactForm.reset();
+        });
+    }
 });
